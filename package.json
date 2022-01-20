@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@crestron/ch5-utilities-cli": "^0.1.47",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -12,15 +13,20 @@
     "@types/react-dom": "^17.0.11",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
     "react-scripts": "5.0.0",
+    "rsuite": "^5.4.4",
     "typescript": "^4.5.4",
     "web-vitals": "^2.1.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "serve": "serve -s build",
+    "build-and-serve": "yarn build && yarn serve",
+    "build:archive": "yarn ch5-cli archive -p react-ws-test -P samplesource=react-ws-test -d build -o dist",
+    "build:deploy": "yarn ch5-cli deploy -p -H 192.168.1.16 -t touchscreen dist/react-ws-test.ch5z",
+    "build:onestep": "yarn build && yarn build:archive && yarn build:deploy"
   },
   "eslintConfig": {
     "extends": [

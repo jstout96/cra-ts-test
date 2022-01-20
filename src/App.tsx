@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Button, Grid } from 'rsuite'
+import Slider from 'rsuite/Slider'
 import './App.css';
+import VolumeSlider from './components/VolumeSlider';
+
+const ws = new WebSocket("ws://192.168.1.99:54321/Log");
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div 
+      className="App" 
+      style={{
+        display: "flex", 
+        height: "100vh",
+        backgroundColor: "#0071BC"
+      }}
+    >
+      <Grid>
+        <Button
+          onClick={() => ws.send("Test")}
         >
-          Learn React
-        </a>
-      </header>
+          Send Message
+        </Button>
+        <Slider style={{display: "flex", position: "absolute", top: "50vh"}}/>
+      </Grid>
     </div>
   );
 }
 
 export default App;
+
+{/* <VolumeSlider 
+          label='Wireless Mic 1'
+          name='WM1'
+          socket={ws}
+        /> */}
