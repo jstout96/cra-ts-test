@@ -7,22 +7,35 @@ import {
     FaVolumeMute
 } from 'react-icons/fa'
 
-function VolumeSlider(props: { label: string; name: string; socket: WebSocket}) {
-    const [sliderValue, setSliderValue] = React.useState(50);
+const VolumeSlider = (props: { label: string; name: string; socket: WebSocket; min: number; max: number;}) => {
+    const [sliderValue, setSliderValue] = React.useState(0);
 
 
     return(
-        <Stack>
+        <Stack direction="column">
             <div>{props.label}</div>
-            <Slider
-                value={sliderValue}
-                onChange={v => setSliderValue(v)}
-                vertical
-                style={{height: "60vh"}}
-            />
-            <IconButton icon={<Icon as={FaVolumeUp}/>} onClick={() => props.socket.send('Increment~' + props.name)}/>
-            <IconButton icon={<Icon as={FaVolumeDown}/>} onClick={() => props.socket.send('Decrement~' + props.name)}/>
-            <IconButton icon={<Icon as={FaVolumeMute}/>} onClick={() => props.socket.send('ToggleMute~' + props.name)}/>
+            <div style={{height: "60vh"}}>
+                <Slider
+                    value={sliderValue}
+                    onChange={v => {
+                        props.socket.send(`Set~${props.name}~${v}`)
+                        setSliderValue(v)
+                    }}
+                    vertical
+                    min={props.min}
+                    max={props.max}
+                    progress
+                />
+            </div>
+            <IconButton icon={<Icon as={FaVolumeUp}/>} onClick={() => {
+                props.socket.send(`Increment~${props.name}`)
+                if (sliderValue < props.max)  setSliderValue(sliderValue + 1)
+            }}/>
+            <IconButton icon={<Icon as={FaVolumeDown}/>} onClick={() => {
+                props.socket.send(`Decrement~${props.name}`)
+                if (sliderValue > props.min)  setSliderValue(sliderValue - 1)
+            }}/>
+            <IconButton icon={<Icon as={FaVolumeMute}/>} onClick={() => props.socket.send(`ToggleMute~${props.name}`)}/>
         </Stack>
     )
 }

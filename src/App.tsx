@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Grid } from 'rsuite'
-import Slider from 'rsuite/Slider'
+import { Button, Grid, Row, Col } from 'rsuite'
 import './App.css';
 import VolumeSlider from './components/VolumeSlider';
+
+import "rsuite/dist/rsuite.min.css";
 
 const ws = new WebSocket("ws://192.168.1.99:54321/Log");
 
@@ -17,12 +18,43 @@ function App() {
       }}
     >
       <Grid>
-        <Button
-          onClick={() => ws.send("Test")}
-        >
-          Send Message
-        </Button>
-        <Slider style={{display: "flex", position: "absolute", top: "50vh"}}/>
+        <Row>
+          <Button
+            onClick={() => ws.send("Test")}
+          >
+            Send Message
+          </Button>
+        </Row>
+
+        <Row>
+          <Col>
+            <VolumeSlider 
+              label='Wireless Mic 1'
+              name='WM1'
+              socket={ws}
+              min={-12}
+              max={6}
+            /> 
+          </Col>
+          <Col>
+            <VolumeSlider 
+              label='Wireless Mic 2'
+              name='WM2'
+              socket={ws}
+              min={-12}
+              max={6}
+            /> 
+          </Col>
+          <Col>
+            <VolumeSlider 
+              label='Wireless Mic 3'
+              name='WM3'
+              socket={ws}
+              min={-12}
+              max={6}
+            /> 
+          </Col>
+        </Row>
       </Grid>
     </div>
   );
@@ -30,8 +62,3 @@ function App() {
 
 export default App;
 
-{/* <VolumeSlider 
-          label='Wireless Mic 1'
-          name='WM1'
-          socket={ws}
-        /> */}
