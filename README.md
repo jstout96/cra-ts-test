@@ -29,17 +29,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run build:archive`
-
-Build the project and create the archive for upload to a Crestron touch screen device
-
-### `npm run build:deploy`
-
-Deploy the archive in the ./dist folder to a Crestron touch screen device
-
 ### `npm run build:onestep`
 
 Build, archive, and deploy the project in one command
+
+Requires Powershell and 7-Zip to be in the PATH environment variable
 
 ## Learn More
 

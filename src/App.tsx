@@ -54,6 +54,15 @@ function App() {
               max={6}
             /> 
           </Col>
+          <Col>
+            <VolumeSlider 
+              label='Wireless Mic 4'
+              name='WM4'
+              socket={ws}
+              min={-12}
+              max={6}
+            /> 
+          </Col>
         </Row>
       </Grid>
     </div>

@@ -1,0 +1,1 @@
+.\ch5-easy -projectName "cra-ts-test" -sourceDirectory "build" -hostname "192.168.1.16" -username "admin" -password "!csTech1"

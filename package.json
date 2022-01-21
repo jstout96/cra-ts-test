@@ -3,11 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@crestron/ch5-utilities-cli": "^0.1.47",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.4.0",
     "@types/node": "^16.11.19",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
@@ -23,10 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "serve": "serve -s build",
-    "build-and-serve": "yarn build && yarn serve",
-    "build:archive": "yarn ch5-cli archive -p react-ws-test -P samplesource=react-ws-test -d build -o dist",
-    "build:deploy": "yarn ch5-cli deploy -p -H 192.168.1.16 -t touchscreen dist/react-ws-test.ch5z",
-    "build:onestep": "yarn build && yarn build:archive && yarn build:deploy"
+    "build:onestep": "npm run build && @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./ch5-build-upload.ps1"
   },
   "eslintConfig": {
     "extends": [
