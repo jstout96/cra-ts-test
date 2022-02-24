@@ -1,41 +1,52 @@
 import * as React from 'react';
 import { Slider, Stack, IconButton } from 'rsuite';
 import { Icon } from '@rsuite/icons';
+import './VolumeSlider.css'
 import {
     FaVolumeDown,
     FaVolumeUp,
-    FaVolumeMute
+    FaVolumeMute,
 } from 'react-icons/fa'
+import { slices } from '../app/store';
+import { useSelector, useDispatch } from 'react-redux';
 
 const VolumeSlider = (props: { label: string; name: string; socket: WebSocket; min: number; max: number;}) => {
     const [sliderValue, setSliderValue] = React.useState(0);
-
-
+    const dispatch = useDispatch()
+    const n = props.name;
     return(
-        <Stack direction="column">
-            <div>{props.label}</div>
-            <div style={{height: "60vh"}}>
+        <Stack style={{paddingTop: "10px", marginLeft: "10px"}}>
+            <div className="VolumeLabel">{props.label}</div>
+            <div style={{width: "60vh", paddingLeft: "10px", paddingRight: "10px"}}>
                 <Slider
                     value={sliderValue}
                     onChange={v => {
-                        props.socket.send(`Set~${props.name}~${v}`)
-                        setSliderValue(v)
+                        dispatch(slices[n].actions.set(v).type)
                     }}
-                    vertical
                     min={props.min}
                     max={props.max}
                     progress
                 />
             </div>
-            <IconButton icon={<Icon as={FaVolumeUp}/>} onClick={() => {
-                props.socket.send(`Increment~${props.name}`)
-                if (sliderValue < props.max)  setSliderValue(sliderValue + 1)
-            }}/>
-            <IconButton icon={<Icon as={FaVolumeDown}/>} onClick={() => {
-                props.socket.send(`Decrement~${props.name}`)
-                if (sliderValue > props.min)  setSliderValue(sliderValue - 1)
-            }}/>
-            <IconButton icon={<Icon as={FaVolumeMute}/>} onClick={() => props.socket.send(`ToggleMute~${props.name}`)}/>
+            <IconButton 
+                className="VolumeButton"
+                icon={<Icon className="VolumeIcon" as={FaVolumeUp}/>} 
+                onClick={() => {
+                    slices[n].actions.increment()
+                }}
+            />
+            <IconButton 
+                className="VolumeButton"
+                icon={<Icon className="VolumeIcon" as={FaVolumeDown}/>} 
+                onClick={() => {
+                    slices[n].actions.decrement()
+                }}
+            />
+            <IconButton 
+                className="VolumeButton"
+                icon={<Icon className="VolumeIcon" as={FaVolumeMute}/>} 
+                onClick={() => props.socket.send(`ToggleMute~${props.name}`)}
+            />
         </Stack>
     )
 }

@@ -1,0 +1,16 @@
+.VolumeButton {
+    width: 72px;
+    height: 72px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.VolumeIcon {
+    width: 54px;
+    height: 54px;
+}
+
+.VolumeLabel {
+    font-size: x-large;
+    color: black;
+}
