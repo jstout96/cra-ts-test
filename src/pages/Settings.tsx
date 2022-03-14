@@ -1,6 +1,6 @@
 
 
-export default function Settings(props: {socket: WebSocket;}) {
+export default function Settings() {
     return(
         <div>
 

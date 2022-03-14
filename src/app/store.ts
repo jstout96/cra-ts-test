@@ -1,31 +1,25 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { sliders, min, max } from './config'
-import createSliderSlice from '../components/VolumeSliderSlice'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { sendToProcessor } from './websocket';
+import sliderReducer from '../components/VolumeSliderSlice'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-var ws = new WebSocket("ws://192.168.1.99:54321/Data");
-var slidersByName: { [s: string]: any } = {};
-var reducers: { [s: string]: any } = {};
-export const slices: { [s: string]: any } = sliders.map((v) => v.name).reduce((prev, curr) => ({ ...prev, [curr]: createSliderSlice(curr, ws, min, max)}), {})
+const rootReducer = combineReducers({ slider: sliderReducer});
 
-Object.entries(slices).forEach(
-  ([key, value]) => {
-    slidersByName[key] = value.actions;
-    reducers[key] = value.reducer;
-    console.log({key, value})
-  }
-);
+const store = configureStore({
+  reducer: rootReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware().prepend(sendToProcessor)
+  
+});
 
 
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useAppDispatch = () => useDispatch<AppDispatch>()
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
-export const increment = (sliderName: string) =>
-	slidersByName[sliderName].actions.increment;
-export const decrement = (sliderName: string) =>
-	slidersByName[sliderName].actions.decrement;
-export const incrementByAmount = (sliderName: string) =>
-	slidersByName[sliderName].actions.incrementByAmount;
+export default store
 
-export default configureStore({
-    reducer: {
-      ...reducers
-    },
-  });
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof rootReducer>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch

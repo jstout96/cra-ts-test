@@ -1,11 +1,13 @@
 import * as React from 'react';
 import {SelectPicker, CheckPicker, Button, Stack } from 'rsuite';
 import { inputs, outputs, types } from '../app/config'
+import { useAppDispatch } from '../app/store';
 
-export default function Video(props: {socket: WebSocket;}) {
+export default function Video() {
     const [input, setInput] = React.useState("");
     const [output, setOutput] = React.useState([""]);
     const [type, setType] = React.useState("");
+    const dispatch = useAppDispatch();
 
     return(
         <div style={{marginTop: "25px"}}>
@@ -16,7 +18,7 @@ export default function Video(props: {socket: WebSocket;}) {
                 <Button
                     onClick={() => {
                         if (input !== "") {
-                            props.socket.send(`Route~${input}~${output}~${type}`)
+                            dispatch({type: 'send', payload: `Route~${input}~${output}~${type}`})
                         }
                     }}
                 >

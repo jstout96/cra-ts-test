@@ -8,16 +8,19 @@ import Settings from './pages/Settings';
 import {
   FaCog
 } from 'react-icons/fa'
+import { ws } from './app/websocket';
+import { useAppDispatch } from "./app/store"
 
 import "rsuite/dist/rsuite.min.css";
 
-var ws = new WebSocket("ws://192.168.1.99:54321/Data");
+
 
 function App() {
   const [active, setActive] = React.useState('video');
-  //ws.onclose = (e) => {
-    //setTimeout(() => {if (!ws.OPEN) ws = new WebSocket("ws://192.168.1.99:54321/Data")}, 5000)
-  //}
+  const dispatch = useAppDispatch();
+  ws.onmessage = e => {
+    dispatch({type: 'receive', payload: (e.data)})
+  }
 
 
   return (
@@ -34,9 +37,9 @@ function App() {
                     <Nav.Item icon={<Icon className= "SettingsIcon" as={FaCog} />} eventKey="settings">Settings</Nav.Item>
                   </Nav>
                 </Row>
-                {active === 'video' && <Video socket={ws} />}
-                {active === 'audio' && <Audio socket={ws} />}
-                {active === 'settings' && <Settings socket={ws} />}
+                {active === 'video' && <Video/>}
+                {active === 'audio' && <Audio/>}
+                {active === 'settings' && <Settings/>}
               </Col>
             </Grid>
           </Navbar>

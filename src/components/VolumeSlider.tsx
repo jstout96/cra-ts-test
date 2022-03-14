@@ -7,21 +7,29 @@ import {
     FaVolumeUp,
     FaVolumeMute,
 } from 'react-icons/fa'
-import { slices } from '../app/store';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../app/store';
 
-const VolumeSlider = (props: { label: string; name: string; socket: WebSocket; min: number; max: number;}) => {
-    const [sliderValue, setSliderValue] = React.useState(0);
-    const dispatch = useDispatch()
-    const n = props.name;
+
+
+const VolumeSlider = (props: { label: string; name: string; min: number; max: number;}) => {
+    const sliderLevel = useAppSelector(state => {
+        const slider = state.slider.sliders.find(s => s.id === props.name);
+        if (slider) return slider.value;
+    })
+    const sliderMute = useAppSelector(state => {
+        const slider = state.slider.sliders.find(s => s.id === props.name);
+        if (slider) return slider.mute;
+    })
+    const dispatch = useAppDispatch()
+
     return(
         <Stack style={{paddingTop: "10px", marginLeft: "10px"}}>
             <div className="VolumeLabel">{props.label}</div>
             <div style={{width: "60vh", paddingLeft: "10px", paddingRight: "10px"}}>
                 <Slider
-                    value={sliderValue}
+                    value={sliderLevel}
                     onChange={v => {
-                        dispatch(slices[n].actions.set(v).type)
+                        dispatch({type:'send', payload:`Set~${props.name}~${v}`})
                     }}
                     min={props.min}
                     max={props.max}
@@ -32,20 +40,33 @@ const VolumeSlider = (props: { label: string; name: string; socket: WebSocket; m
                 className="VolumeButton"
                 icon={<Icon className="VolumeIcon" as={FaVolumeUp}/>} 
                 onClick={() => {
-                    slices[n].actions.increment()
+                    if ((sliderLevel || sliderLevel === 0) && sliderLevel <= props.max - 10) {
+                        dispatch({type:'send', payload:`Increment~${props.name}~${10}`})
+                    }
+                    else if ((sliderLevel || sliderLevel === 0) && sliderLevel < props.max) {
+                        dispatch({type:'send', payload:`Set~${props.name}~${props.max}`})
+                    }
                 }}
             />
             <IconButton 
                 className="VolumeButton"
                 icon={<Icon className="VolumeIcon" as={FaVolumeDown}/>} 
                 onClick={() => {
-                    slices[n].actions.decrement()
+                    if ((sliderLevel || sliderLevel === 0) && sliderLevel >= props.min + 10) {
+                        dispatch({type:'send', payload:`Increment~${props.name}~${-10}`})
+                    }
+                    else if ((sliderLevel || sliderLevel === 0) && sliderLevel > props.min){
+                        dispatch({type:'send', payload:`Set~${props.name}~${props.min}`})
+                    }
                 }}
             />
             <IconButton 
                 className="VolumeButton"
                 icon={<Icon className="VolumeIcon" as={FaVolumeMute}/>} 
-                onClick={() => props.socket.send(`ToggleMute~${props.name}`)}
+                onClick={() => {
+                    dispatch({type:'send', payload:`ToggleMute~${props.name}`})
+                }}
+                color={sliderMute ? 'red' : 'blue'}
             />
         </Stack>
     )

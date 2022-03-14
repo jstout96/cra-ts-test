@@ -30,4 +30,6 @@ const sliders = [
 const min = -120;
 const max = 60
 
-export {inputs, outputs, types, sliders, min, max}
+const host = "ws://192.168.1.99:54321/Data"
+
+export {inputs, outputs, types, sliders, min, max, host}
