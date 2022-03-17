@@ -11,13 +11,13 @@ import { useAppSelector, useAppDispatch } from '../app/store';
 
 
 
-const VolumeSlider = (props: { label: string; name: string; min: number; max: number;}) => {
+const VolumeSlider = (props: { label: string; name: string; min: number; max: number; step: number;}) => {
     const sliderLevel = useAppSelector(state => {
-        const slider = state.slider.sliders.find(s => s.id === props.name);
+        const slider = state.audio.sliders.find(s => s.id === props.name);
         if (slider) return slider.value;
     })
     const sliderMute = useAppSelector(state => {
-        const slider = state.slider.sliders.find(s => s.id === props.name);
+        const slider = state.audio.sliders.find(s => s.id === props.name);
         if (slider) return slider.mute;
     })
     const dispatch = useAppDispatch()
@@ -40,8 +40,9 @@ const VolumeSlider = (props: { label: string; name: string; min: number; max: nu
                 className="VolumeButton"
                 icon={<Icon className="VolumeIcon" as={FaVolumeUp}/>} 
                 onClick={() => {
-                    if ((sliderLevel || sliderLevel === 0) && sliderLevel <= props.max - 10) {
-                        dispatch({type:'send', payload:`Increment~${props.name}~${10}`})
+                    console.log(sliderLevel)
+                    if ((sliderLevel || sliderLevel === 0) && sliderLevel <= props.max - props.step) {
+                        dispatch({type:'send', payload:`Increment~${props.name}~${props.step}`})
                     }
                     else if ((sliderLevel || sliderLevel === 0) && sliderLevel < props.max) {
                         dispatch({type:'send', payload:`Set~${props.name}~${props.max}`})
@@ -52,8 +53,9 @@ const VolumeSlider = (props: { label: string; name: string; min: number; max: nu
                 className="VolumeButton"
                 icon={<Icon className="VolumeIcon" as={FaVolumeDown}/>} 
                 onClick={() => {
-                    if ((sliderLevel || sliderLevel === 0) && sliderLevel >= props.min + 10) {
-                        dispatch({type:'send', payload:`Increment~${props.name}~${-10}`})
+                    console.log(sliderLevel)
+                    if ((sliderLevel || sliderLevel === 0) && sliderLevel >= props.min + props.step) {
+                        dispatch({type:'send', payload:`Increment~${props.name}~${-props.step}`})
                     }
                     else if ((sliderLevel || sliderLevel === 0) && sliderLevel > props.min){
                         dispatch({type:'send', payload:`Set~${props.name}~${props.min}`})

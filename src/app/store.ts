@@ -1,9 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { sendToProcessor } from './websocket';
-import sliderReducer from '../components/VolumeSliderSlice'
+import audioReducer from './slices/AudioSlice'
+import videoReducer from './slices/VideoSlice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-const rootReducer = combineReducers({ slider: sliderReducer});
+const rootReducer = combineReducers({ 
+  audio: audioReducer,
+  video: videoReducer
+});
 
 const store = configureStore({
   reducer: rootReducer,

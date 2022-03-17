@@ -13,23 +13,25 @@ const types = [
     {"label": "Audio Only", "value": "A"},
     {"label": "Video Only", "value": "V"},
 ]
-
+const min = 48059;
+const max = 57889;
+const step = 546;
 const sliders = [
-    {label:'Wireless Mic 1', name:'WP1-1', min:-120, max:60},
-    {label:'Wireless Mic 2', name:'WP1-2', min:-120, max:60},
-    {label:'Wireless Mic 3', name:'WP1-3', min:-120, max:60},
-    {label:'Wireless Mic 4', name:'WP1-4', min:-120, max:60},
-    {label:'Wireless Mic 5', name:'WP2-1', min:-120, max:60},
-    {label:'Wireless Mic 6', name:'WP2-2', min:-120, max:60},
-    {label:'Wireless Mic 7', name:'WP2-3', min:-120, max:60},
-    {label:'Wireless Mic 8', name:'WP2-4', min:-120, max:60},
-    {label:'Wireless Mic 9', name:'WP3-1', min:-120, max:60},
+    {label:'Wall Plate Input 1', name:'WP1-1', min: min, max: max, step: step},
+    {label:'Wall Plate Input 2', name:'WP1-2', min: min, max: max, step: step},
+    {label:'Wall Plate Input 3', name:'WP1-3', min: min, max: max, step: step},
+    {label:'Wall Plate Input 4', name:'WP1-4', min: min, max: max, step: step},
+    {label:'Floor Box Input 1', name:'FB1-1', min: min, max: max, step: step},
+    {label:'Floor Box Input 2', name:'FB1-2', min: min, max: max, step: step},
+    {label:'Floor Box Input 3', name:'FB1-3', min: min, max: max, step: step},
+    {label:'Floor Box Input 4', name:'FB1-4', min: min, max: max, step: step},
+    {label:'Video', name:'Video', min: min, max: max, step: step},
+    {label:'Overall', name:'Main', min: min, max: max, step: step},
     
 ]
 
-const min = -120;
-const max = 60
+
 
 const host = "ws://192.168.1.99:54321/Data"
 
-export {inputs, outputs, types, sliders, min, max, host}
+export {inputs, outputs, types, sliders, min, max, step, host}
