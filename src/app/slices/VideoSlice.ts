@@ -5,7 +5,7 @@ import { receive } from '../websocket';
 const initialState = {
     routes: outputs.map(item => ({
         source: '',
-        destination: item.value,
+        destination: item.key,
         type: ''
     }))
 }

@@ -1,21 +1,39 @@
 import * as React from 'react';
-import {SelectPicker, CheckPicker, Button, Stack } from 'rsuite';
+import { ComboBox, Stack, DefaultButton, IComboBox, IComboBoxOption } from '@fluentui/react'
 import { inputs, outputs, types } from '../app/config'
 import { useAppDispatch } from '../app/store';
 
 export default function Video() {
-    const [input, setInput] = React.useState("");
-    const [output, setOutput] = React.useState([""]);
-    const [type, setType] = React.useState("");
+    const [input, setInput] = React.useState<string | undefined>("");
+    const [output, setOutput] = React.useState<string[]>([""]);
+    const [type, setType] = React.useState<string | undefined>("AV");
     const dispatch = useAppDispatch();
+
+    const onInputChange = (event: React.FormEvent<IComboBox>, option: any, index: any, value: string | undefined):void => {
+        setInput(value)
+    }
+
+    const onOutputChange = (event: React.FormEvent<IComboBox>, option?: IComboBoxOption, index?: any, value?: string | undefined):void => {
+        if (option) {
+            setOutput(prevSelectedKeys =>
+              option.selected ? [...prevSelectedKeys, option!.key as string] : prevSelectedKeys.filter(k => k !== option!.key),
+            );
+          }
+        
+    }
+
+    const onTypeChange = (event: React.FormEvent<IComboBox>, option: any, index: any, value: string | undefined):void => {
+        setType(value)
+    }
+
 
     return(
         <div style={{marginTop: "25px"}}>
-            <Stack justifyContent='space-around'>
-                <SelectPicker data={inputs} value={input} onChange={setInput} searchable={false} size={'lg'}></SelectPicker>
-                <CheckPicker data={outputs} value={output} onChange={setOutput}searchable={false} size={'lg'}></CheckPicker>
-                <SelectPicker data={types} value={type} onChange={setType} searchable={false} size={'lg'} defaultValue={'AV'}></SelectPicker>
-                <Button
+            <Stack horizontal>
+                <ComboBox options={inputs} selectedKey={input} onChange={onInputChange} allowFreeform={false}></ComboBox>
+                <ComboBox options={outputs} selectedKey={output} onChange={onOutputChange} allowFreeform={false} multiSelect></ComboBox>
+                <ComboBox options={types} selectedKey={type} onChange={onTypeChange} allowFreeform={false}></ComboBox>
+                <DefaultButton
                     onClick={() => {
                         if (input !== "") {
                             dispatch({type: 'send', payload: `Route~${input}~${output}~${type}`})
@@ -23,7 +41,7 @@ export default function Video() {
                     }}
                 >
                     Route
-                </Button>
+                </DefaultButton>
             </Stack>
         </div>
     );

@@ -3,6 +3,8 @@
     height: 72px;
     margin-left: 5px;
     margin-right: 5px;
+    border-width: 2px;
+    border-color: white;
 }
 
 .VolumeIcon {
@@ -12,5 +14,13 @@
 
 .VolumeLabel {
     font-size: x-large;
-    color: black;
+    color: white;
+}
+
+.ms-Slider-value {
+    color: white;
+}
+
+.ms-Slider-active {
+    background: #0071BC;
 }

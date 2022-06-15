@@ -2,8 +2,9 @@
   text-align: center;
   display: flex;
   height: 100vh;
-  background-color: #0071BC;
-
+  background-color: #282c34;/*#0071BC;
+  font-size: calc(10px + 2vmin)
+  2vmin evaluates to .02 * window height in px. */
 }
 
 .Nav {
@@ -15,20 +16,9 @@
   width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .SettingsIcon {
   width: 24px;
   height: 24px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -42,38 +32,6 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.rs-list-item {
-  box-shadow: none !important;
-}
-
-.rs-grid-container {
-  margin-right: 0 !important;
-  margin-left: 0 !important;
-  width: 100% !important;
-}
-
-.rs-col {
-  width: 100% !important;
-}
-
-.rs-navbar-nav, .rs-nav-item, .rs-nav-item-active {
-  font-size: x-large !important;
-  color: black !important;
-}
-
-.rs-nav-item-active {
-  background-color: white !important;
+.header, .headerButton{
+  min-height: 50px;
 }

@@ -1,75 +1,79 @@
-import * as React from 'react';
-import { Slider, Stack, IconButton } from 'rsuite';
-import { Icon } from '@rsuite/icons';
+import { Slider, Stack, IconButton, DefaultButton } from '@fluentui/react'
 import './VolumeSlider.css'
-import {
-    FaVolumeDown,
-    FaVolumeUp,
-    FaVolumeMute,
-} from 'react-icons/fa'
 import { useAppSelector, useAppDispatch } from '../app/store';
+import { minDefault, maxDefault, stepDefault } from '../app/config'
+import { Speaker124Filled, SpeakerMute24Filled, Speaker224Filled } from '@fluentui/react-icons';
 
 
 
-const VolumeSlider = (props: { label: string; name: string; min: number; max: number; step: number;}) => {
+const VolumeSlider = (props?: { label?: string; name?: string; min?: number; max?: number; step?: number;}) => {
     const sliderLevel = useAppSelector(state => {
-        const slider = state.audio.sliders.find(s => s.id === props.name);
+        const slider = state.audio.sliders.find(s => s.id === props?.name);
         if (slider) return slider.value;
     })
     const sliderMute = useAppSelector(state => {
-        const slider = state.audio.sliders.find(s => s.id === props.name);
+        const slider = state.audio.sliders.find(s => s.id === props?.name);
         if (slider) return slider.mute;
     })
     const dispatch = useAppDispatch()
+    const min = props?.min ?? minDefault
+    const max = props?.max ?? maxDefault
+    const step = props?.step ?? stepDefault
 
     return(
-        <Stack style={{paddingTop: "10px", marginLeft: "10px"}}>
-            <div className="VolumeLabel">{props.label}</div>
+        <Stack horizontal style={{paddingTop: "10px", marginLeft: "10px"}}>
+            <div className="VolumeLabel">{props?.label}</div>
             <div style={{width: "60vh", paddingLeft: "10px", paddingRight: "10px"}}>
                 <Slider
-                    value={sliderLevel}
+                    
                     onChange={v => {
-                        dispatch({type:'send', payload:`Set~${props.name}~${v}`})
+                        dispatch({type:'send', payload:`Set~${props?.name}~${v}`})
                     }}
-                    min={props.min}
-                    max={props.max}
-                    progress
+                    min={min}
+                    max={max}
+                    step={step}
+                    valueFormat={(v) => {
+                        const p = Math.trunc((v - min)/(max - min) * 100)
+                        return `${p}%`
+                    }}
+                    value={sliderLevel}
                 />
             </div>
-            <IconButton 
+            <DefaultButton 
                 className="VolumeButton"
-                icon={<Icon className="VolumeIcon" as={FaVolumeUp}/>} 
                 onClick={() => {
-                    console.log(sliderLevel)
-                    if ((sliderLevel || sliderLevel === 0) && sliderLevel <= props.max - props.step) {
-                        dispatch({type:'send', payload:`Increment~${props.name}~${props.step}`})
+                    if ((sliderLevel || sliderLevel === 0) && sliderLevel <= max - step) {
+                        dispatch({type:'send', payload:`Increment~${props?.name}~${step}`})
                     }
-                    else if ((sliderLevel || sliderLevel === 0) && sliderLevel < props.max) {
-                        dispatch({type:'send', payload:`Set~${props.name}~${props.max}`})
+                    else if ((sliderLevel || sliderLevel === 0) && sliderLevel < max) {
+                        dispatch({type:'send', payload:`Set~${props?.name}~${max}`})
                     }
                 }}
-            />
-            <IconButton 
+            >
+                <Speaker224Filled/>
+            </DefaultButton>
+            <DefaultButton 
                 className="VolumeButton"
-                icon={<Icon className="VolumeIcon" as={FaVolumeDown}/>} 
                 onClick={() => {
-                    console.log(sliderLevel)
-                    if ((sliderLevel || sliderLevel === 0) && sliderLevel >= props.min + props.step) {
-                        dispatch({type:'send', payload:`Increment~${props.name}~${-props.step}`})
+                    if ((sliderLevel || sliderLevel === 0) && sliderLevel >= min + step) {
+                        dispatch({type:'send', payload:`Decrement~${props?.name}~${step}`})
                     }
-                    else if ((sliderLevel || sliderLevel === 0) && sliderLevel > props.min){
-                        dispatch({type:'send', payload:`Set~${props.name}~${props.min}`})
+                    else if ((sliderLevel || sliderLevel === 0) && sliderLevel > min){
+                        dispatch({type:'send', payload:`Set~${props?.name}~${min}`})
                     }
                 }}
-            />
-            <IconButton 
+            >
+                <Speaker124Filled/>
+            </DefaultButton>
+            <DefaultButton 
                 className="VolumeButton"
-                icon={<Icon className="VolumeIcon" as={FaVolumeMute}/>} 
                 onClick={() => {
-                    dispatch({type:'send', payload:`ToggleMute~${props.name}`})
+                    dispatch({type:'send', payload:`ToggleMute~${props?.name}`})
                 }}
                 color={sliderMute ? 'red' : 'blue'}
-            />
+            >
+                <SpeakerMute24Filled/>
+            </DefaultButton>
         </Stack>
     )
 }
