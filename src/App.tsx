@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DefaultButton, IconButton, Stack } from '@fluentui/react'
+import { DefaultButton, Stack } from '@fluentui/react'
 import './App.css';
 import Video from './pages/Video';
 import Audio from './pages/Audio';
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="App" >
-          <Stack>
+          <Stack style={{alignContent:"center"}}>
               <Stack horizontal className="header">
                   <DefaultButton className="headerButton" onClick={() => setActive('video')} text="Video"><Video48Filled/></DefaultButton>
                   <DefaultButton className="headerButton" onClick={() => setActive('audio')} text="Audio"><Speaker248Filled/></DefaultButton>

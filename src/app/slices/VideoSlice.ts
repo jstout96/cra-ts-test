@@ -26,8 +26,8 @@ const videoSlice = createSlice({
 	extraReducers: builder =>{
 		builder.addCase(receive, (state, action) => {
 				const o = JSON.parse(action.payload).Switcher.OutputRoutes
-				console.log(o)
-				/*for (const k of Object.keys(o)){
+				/*console.log(o)
+				for (const k of Object.keys(o)){
 					var r = state.routes.find(s => s.destination === k)
 					if (r) {
 						r.source = o[k].CurrentVolume

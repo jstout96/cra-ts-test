@@ -5,7 +5,16 @@ import App from './App';
 import store from './app/store';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
+import eruda from "eruda"
 
+eruda.init({
+  autoScale: false,
+  defaults: {
+      theme: "Dracula",
+  },
+});
+
+eruda.scale(1.5);
 
 ReactDOM.render(
   <React.StrictMode>

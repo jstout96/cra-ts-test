@@ -29,12 +29,12 @@ const audioSlice = createSlice({
 	extraReducers: builder =>{
 		builder.addCase(receive, (state, action) => {
 				const o = JSON.parse(action.payload).Dsp.Faders
-				console.log(o)
+				//console.log(o)
 				for (const k of Object.keys(o)){
 					var slider = state.sliders.find(s => s.id === k)
 					if (slider) {
-						slider.value = o[k].Volume
-						slider.mute = o[k].Muted
+						var tmp = {id: slider.id, value: o[k].Volume, mute: o[k].Muted}
+						state.sliders[state.sliders.indexOf(slider)] = tmp
 					}
 				}
 			})

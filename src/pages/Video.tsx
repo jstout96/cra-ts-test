@@ -29,7 +29,7 @@ export default function Video() {
 
     return(
         <div style={{marginTop: "25px"}}>
-            <Stack horizontal>
+            <Stack horizontal horizontalAlign='space-between'>
                 <ComboBox options={inputs} selectedKey={input} onChange={onInputChange} allowFreeform={false}></ComboBox>
                 <ComboBox options={outputs} selectedKey={output} onChange={onOutputChange} allowFreeform={false} multiSelect></ComboBox>
                 <ComboBox options={types} selectedKey={type} onChange={onTypeChange} allowFreeform={false}></ComboBox>

@@ -1,4 +1,4 @@
-import { Slider, Stack, IconButton, DefaultButton } from '@fluentui/react'
+import { Slider, Stack, DefaultButton } from '@fluentui/react'
 import './VolumeSlider.css'
 import { useAppSelector, useAppDispatch } from '../app/store';
 import { minDefault, maxDefault, stepDefault } from '../app/config'
@@ -6,7 +6,7 @@ import { Speaker124Filled, SpeakerMute24Filled, Speaker224Filled } from '@fluent
 
 
 
-const VolumeSlider = (props?: { label?: string; name?: string; min?: number; max?: number; step?: number;}) => {
+const VolumeSlider = (props?: { label?: string; name?: string; min?: number; max?: number; step?: number; vertical?: boolean}) => {
     const sliderLevel = useAppSelector(state => {
         const slider = state.audio.sliders.find(s => s.id === props?.name);
         if (slider) return slider.value;
@@ -21,11 +21,11 @@ const VolumeSlider = (props?: { label?: string; name?: string; min?: number; max
     const step = props?.step ?? stepDefault
 
     return(
-        <Stack horizontal style={{paddingTop: "10px", marginLeft: "10px"}}>
+        <Stack horizontal={!props?.vertical} style={{paddingTop: "10px", marginLeft: "10px", justifyContent:"flex-end", minWidth:"9vw"}}>
             <div className="VolumeLabel">{props?.label}</div>
-            <div style={{width: "60vh", paddingLeft: "10px", paddingRight: "10px"}}>
+            <div style={{paddingLeft: "10px", paddingRight: "10px"}}>
                 <Slider
-                    
+                    styles={{container: {height: "50vh"}}}
                     onChange={v => {
                         dispatch({type:'send', payload:`Set~${props?.name}~${v}`})
                     }}
@@ -37,17 +37,13 @@ const VolumeSlider = (props?: { label?: string; name?: string; min?: number; max
                         return `${p}%`
                     }}
                     value={sliderLevel}
+                    vertical={props?.vertical}
                 />
             </div>
             <DefaultButton 
                 className="VolumeButton"
                 onClick={() => {
-                    if ((sliderLevel || sliderLevel === 0) && sliderLevel <= max - step) {
-                        dispatch({type:'send', payload:`Increment~${props?.name}~${step}`})
-                    }
-                    else if ((sliderLevel || sliderLevel === 0) && sliderLevel < max) {
-                        dispatch({type:'send', payload:`Set~${props?.name}~${max}`})
-                    }
+                    dispatch({type:'send', payload:`Increment~${props?.name}~${step}`})
                 }}
             >
                 <Speaker224Filled/>
@@ -55,12 +51,7 @@ const VolumeSlider = (props?: { label?: string; name?: string; min?: number; max
             <DefaultButton 
                 className="VolumeButton"
                 onClick={() => {
-                    if ((sliderLevel || sliderLevel === 0) && sliderLevel >= min + step) {
-                        dispatch({type:'send', payload:`Decrement~${props?.name}~${step}`})
-                    }
-                    else if ((sliderLevel || sliderLevel === 0) && sliderLevel > min){
-                        dispatch({type:'send', payload:`Set~${props?.name}~${min}`})
-                    }
+                    dispatch({type:'send', payload:`Decrement~${props?.name}~${step}`})
                 }}
             >
                 <Speaker124Filled/>
@@ -70,7 +61,10 @@ const VolumeSlider = (props?: { label?: string; name?: string; min?: number; max
                 onClick={() => {
                     dispatch({type:'send', payload:`ToggleMute~${props?.name}`})
                 }}
-                color={sliderMute ? 'red' : 'blue'}
+                styles={{root: {
+                    background: sliderMute ? '#DF0048' : 'white',
+                    },
+                }}
             >
                 <SpeakerMute24Filled/>
             </DefaultButton>
