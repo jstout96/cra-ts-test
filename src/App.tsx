@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="App" >
-          <Stack style={{alignContent:"center"}}>
+          <Stack style={{alignContent:"center", width:"100%"}}>
               <Stack horizontal className="header">
                   <DefaultButton className="headerButton" onClick={() => setActive('video')} text="Video"><Video48Filled/></DefaultButton>
                   <DefaultButton className="headerButton" onClick={() => setActive('audio')} text="Audio"><Speaker248Filled/></DefaultButton>
