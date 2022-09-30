@@ -1,0 +1,18 @@
+.PowerButton, .ScreenButton {
+    width: 96px;
+    height: 96px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    align-self: center;
+}
+
+.DisplayIcon {
+    width: 54px;
+    height: 54px;
+}
+
+.InputDropdown {
+    margin-left: 8px;
+    margin-right: 8px;
+    min-width: 96px;
+}

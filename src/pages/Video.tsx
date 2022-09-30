@@ -11,7 +11,7 @@ export default function Video() {
             <Stack>
                 <VideoRouter/>
                 {routes.map(r => (
-                    <Stack horizontal horizontalAlign='space-around'>
+                    <Stack horizontal horizontalAlign='space-around' key={r.id}>
                         <div style={{textAlign:"left"}}>{r.source}</div>
                         <div style={{textAlign:"left"}}>{r.destination}</div>
                         <div style={{textAlign:"left"}}>{r.type}</div>

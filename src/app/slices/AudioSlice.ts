@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { sliders } from '../config'
 import { receive } from '../websocket';
 
@@ -29,7 +29,6 @@ const audioSlice = createSlice({
 	extraReducers: builder =>{
 		builder.addCase(receive, (state, action) => {
 				const o = JSON.parse(action.payload).Dsp.Faders
-				//console.log(o)
 				for (const k of Object.keys(o)){
 					var slider = state.sliders.find(s => s.id === k)
 					if (slider) {
@@ -37,6 +36,7 @@ const audioSlice = createSlice({
 						state.sliders[state.sliders.indexOf(slider)] = tmp
 					}
 				}
+				//console.log(current(state.sliders)[0])
 			})
 	}
 })

@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { inputs, outputs, types } from '../config'
 import { receive } from '../websocket';
 
+var i = 1;
 const initialState = {
     routes: outputs.map(item => ({
         source: '',
         destination: item.key,
-        type: ''
+        type: '',
+        id: i++
     }))
 }
 
@@ -26,14 +28,14 @@ const videoSlice = createSlice({
 	extraReducers: builder =>{
 		builder.addCase(receive, (state, action) => {
 				const o = JSON.parse(action.payload).Switcher.OutputRoutes
-				/*console.log(o)
+				console.log(o)
 				for (const k of Object.keys(o)){
 					var r = state.routes.find(s => s.destination === k)
 					if (r) {
-						r.source = o[k].CurrentVolume
-						slider.mute = o[k].CurrentMute
+						r.source = o[k]
+						r.destination = o[k].CurrentMute
 					}
-				}*/
+				}
 			})
 	}
 })

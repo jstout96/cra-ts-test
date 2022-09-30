@@ -2,11 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { sendToProcessor } from './websocket';
 import audioReducer from './slices/AudioSlice'
 import videoReducer from './slices/VideoSlice'
+import settingsReducer from './slices/SettingsSlice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 const rootReducer = combineReducers({ 
   audio: audioReducer,
-  video: videoReducer
+  video: videoReducer,
+  settings: settingsReducer
 });
 
 const store = configureStore({

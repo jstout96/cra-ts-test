@@ -37,31 +37,65 @@ const sliders = [
 const displays= [
     {
         name: "TV1",
+        type: "display",
+        label: "Left TV",
+        inputs: [
+            "HDMI1",
+            "HDMI2"
+        ],
         actions: [
             "On",
-            "Off"
-        ]
+            "Off",
+            "HDMI1",
+            "HDMI2"
+        ],
+        state: {
+            on: false,
+            input: "HDMI1"
+        }
     },
     {
         name: "TV2",
+        type: "display",
+        label: "Right TV",
+        inputs: [
+            "HDMI1",
+            "HDMI2"
+        ],
         actions: [
             "On",
-            "Off"
-        ]
+            "Off",
+            "HDMI1",
+            "HDMI2"
+        ],
+        state: {
+            on: false,
+            input: "HDMI1"
+        }
     },
     {
         name: "Projector",
+        type: "projector",
+        label: "Projector",
+        inputs: [
+            "HDMI1",
+            "HDMI2"
+        ],
         actions: [
             "On",
             "Off",
             "SceenUp",
             "ScreenDown"
-        ]
+        ],
+        state: {
+            on: false,
+            input: "HDMI1"
+        }
     }
 ]
 
 
 
-const host = "ws://192.168.1.99:54321/Data"
+const host = "ws://192.168.1.10:54321/Data"
 
 export {inputs, outputs, types, sliders, minDefault, maxDefault, stepDefault, host, displays}
