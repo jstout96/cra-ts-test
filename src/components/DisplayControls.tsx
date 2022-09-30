@@ -1,9 +1,9 @@
 import { Stack, DefaultButton, Dropdown, IDropdownOption } from '@fluentui/react'
-import { Bluetooth20Filled, Power24Filled } from '@fluentui/react-icons';
-import React, { useRef } from 'react';
+import { Power24Filled } from '@fluentui/react-icons';
+import React from 'react';
 import { displays } from '../app/config';
 import { useAppSelector, useAppDispatch } from '../app/store';
-import './DisplayControls.css'
+import '../styles/DisplayControls.css'
 
 const DisplayControls = (props: { label: string; name: string; }) => {
     const displayOn = useAppSelector(state => {

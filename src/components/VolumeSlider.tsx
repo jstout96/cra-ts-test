@@ -1,5 +1,5 @@
 import { Slider, Stack, DefaultButton } from '@fluentui/react'
-import './VolumeSlider.css'
+import '../styles/VolumeSlider.css'
 import { useAppSelector, useAppDispatch } from '../app/store';
 import { minDefault, maxDefault, stepDefault } from '../app/config'
 import { Speaker124Filled, SpeakerMute24Filled, Speaker224Filled } from '@fluentui/react-icons';

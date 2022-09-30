@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DefaultButton, Stack } from '@fluentui/react'
-import './App.css';
+import './styles/App.css';
 import Video from './pages/Video';
 import Audio from './pages/Audio';
 import Settings from './pages/Settings';
