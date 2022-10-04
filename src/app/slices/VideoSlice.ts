@@ -33,7 +33,7 @@ const videoSlice = createSlice({
 					var r = state.routes.find(s => s.destination === k)
 					if (r) {
 						r.source = o[k]
-						r.destination = o[k].CurrentMute
+						r.destination = k
 					}
 				}
 			})

@@ -6,6 +6,7 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import eruda from "eruda"
+import { initializeIcons } from '@fluentui/react';
 
 eruda.init({
   autoScale: false,
@@ -13,6 +14,7 @@ eruda.init({
       theme: "Dracula",
   },
 });
+initializeIcons();
 
 eruda.scale(1.5);
 
