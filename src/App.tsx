@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DefaultButton, Stack } from '@fluentui/react'
+import { DefaultButton, IPivotItemProps, Pivot, PivotItem, Stack } from '@fluentui/react'
 import './styles/App.css';
 import Video from './pages/Video';
 import Audio from './pages/Audio';
@@ -12,27 +12,41 @@ import { Video48Filled, Settings48Filled, Speaker248Filled } from '@fluentui/rea
 
 
 function App() {
-  const [active, setActive] = React.useState('video');
   const dispatch = useAppDispatch();
   ws.onmessage = e => {
     dispatch({type: 'receive', payload: (e.data)})
   }
-  
-
 
   return (
     <div className="App" >
-          <Stack style={{alignContent:"center", width:"100%"}}>
-              <Stack horizontal className="header">
-                  <DefaultButton className="headerButton" onClick={() => setActive('video')} text="Video"><Video48Filled/></DefaultButton>
-                  <DefaultButton className="headerButton" onClick={() => setActive('audio')} text="Audio"><Speaker248Filled/></DefaultButton>
-                  <DefaultButton className="headerButton" onClick={() => setActive('settings')} text="Settings"><Settings48Filled/></DefaultButton>
-              </Stack>
-              {active === 'video' && <Video/>}
-              {active === 'audio' && <Audio/>}
-              {active === 'settings' && <Settings/>}
-          </Stack>
+      <Pivot style={{alignContent:"center", width:"100%"}} linkFormat="tabs">
+        <PivotItem headerText="Video" itemIcon="Video48Filled" onRenderItemLink={_customRenderer}>
+          <Video/>
+        </PivotItem>
+        <PivotItem headerText="Audio" itemIcon="Speaker48Filled">
+          <Audio/>
+        </PivotItem>
+        <PivotItem headerText="Settings" itemIcon="Settings48Filled">
+          <Settings/>
+        </PivotItem>
+      </Pivot>
     </div>
+  );
+}
+
+function _customRenderer(
+  link?: IPivotItemProps,
+  defaultRenderer?: (link?: IPivotItemProps) => JSX.Element | null,
+): JSX.Element | null {
+  if (!link || !defaultRenderer) {
+    return null;
+  }
+
+  return (
+    <span style={{ flex: '0 1 100%' }}>
+      {defaultRenderer({ ...link, itemIcon: undefined })}
+      <Video48Filled />
+    </span>
   );
 }
 

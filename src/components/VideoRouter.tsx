@@ -42,7 +42,7 @@ export default function VideoRouter() {
         <div>
             <Stack horizontal horizontalAlign='space-around'>
                 <Stack>
-                    <div style={{textAlign:"left"}}>Source: </div>
+                    <div style={{textAlign:"center", color:"white"}}>Source: </div>
                     <Dropdown 
                         placeholder="Select Source"
                         className="videoDropdown" 
@@ -53,7 +53,7 @@ export default function VideoRouter() {
                     ></Dropdown>
                 </Stack>
                 <Stack>
-                    <div style={{textAlign:"left"}}>Destination: </div>
+                    <div style={{textAlign:"center", color:"white"}}>Destination: </div>
                     <Dropdown 
                     placeholder="Select Destination(s)"
                         className="videoDropdown" 
@@ -70,7 +70,7 @@ export default function VideoRouter() {
                     ></Dropdown>
                 </Stack>
                 <Stack>
-                    <div style={{textAlign:"left"}}>Type: </div>
+                    <div style={{textAlign:"center", color:"white"}}>Type: </div>
                     <Dropdown 
                         className="videoDropdown" 
                         options={types} 

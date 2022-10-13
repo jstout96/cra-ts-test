@@ -6,7 +6,7 @@ export default function VideoRoutes() {
     const routes = useAppSelector(state => state.video.routes)
 
     return(
-        <div>
+        <div style={{ marginTop: "50px"}}>
             <DetailsList
                 items={routes}
             >
@@ -16,11 +16,3 @@ export default function VideoRoutes() {
     )
 }
 
-/*{routes.map(r => (
-                    <Stack horizontal horizontalAlign='space-around' key={r.id}>
-                        <div style={{textAlign:"left"}}>{r.source}</div>
-                        <div style={{textAlign:"left"}}>{r.destination}</div>
-                        <div style={{textAlign:"left"}}>{r.type}</div>
-                        <div/>
-                    </Stack>
-                ))}*/
